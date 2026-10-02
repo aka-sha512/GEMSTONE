@@ -1,0 +1,38 @@
+name = "GEMStone"
+uuid = "7e6e2906-74b0-4ed3-883a-b713edc66244"
+version = "0.1.0"
+authors = ["red magic <alcarve4@gmail.com>"]
+
+[deps]
+AbstractFBCModels = "5a4f3dfa-1789-40f8-8221-69268c29937c"
+Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+HiGHS = "87dc4568-4c63-4d18-b0c0-bb2238e4078b"
+JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+JSONFBCModels = "475c1105-d6ed-49c1-9b32-c11adca6d3e8"
+JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
+MATFBCModels = "bd2e13bf-42c0-49e1-9a9c-885d36daf88b"
+NetworkLayout = "46757867-2c16-5918-afeb-47bfcb05e46a"
+SBMLFBCModels = "3e8f9d1a-ffc1-486d-82d6-6c7276635980"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+URIs = "5c2747f8-b7ea-4ff2-ba2e-563bfd36b1d4"
+
+[compat]
+AbstractFBCModels = "1.4.0"
+Graphs = "1.15.0"
+HTTP = "2.8.0"
+HiGHS = "1.26.0"
+JSON3 = "1.14.3"
+JSONFBCModels = "1.1.0"
+JuMP = "1.32.0"
+MATFBCModels = "1.0.1"
+NetworkLayout = "0.4.11"
+SBMLFBCModels = "1.1.1"
+SparseArrays = "1.13.0"
+URIs = "1.7.0"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

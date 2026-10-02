@@ -1,0 +1,29 @@
+{
+  "name": "gem-stone-web",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "description": "GEM-STONE front end: React Native components rendered on the web via react-native-web",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview",
+    "e2e": "node scripts/e2e.mjs",
+    "screenshots": "node scripts/e2e.mjs --shots ../docs/screenshots"
+  },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-native-svg": "^15.15.5",
+    "react-native-web": "~0.21.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "react-native": "0.87.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.1"
+  }
+}

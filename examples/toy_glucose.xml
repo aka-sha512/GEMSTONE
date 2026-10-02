@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core"
+      xmlns:fbc="http://www.sbml.org/sbml/level3/version1/fbc/version2"
+      level="3" version="1" fbc:required="false">
+  <model id="teaching_gem" name="Teaching GEM: glucose to biomass" fbc:strict="true">
+    <listOfCompartments>
+      <compartment id="e" name="extracellular space" constant="true"/>
+      <compartment id="c" name="cytosol" constant="true"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="glc__D_e" name="D-Glucose (external)" compartment="e" boundaryCondition="false" hasOnlySubstanceUnits="false" constant="false"/>
+      <species id="glc__D_c" name="D-Glucose (cytosol)" compartment="c" boundaryCondition="false" hasOnlySubstanceUnits="false" constant="false"/>
+      <species id="pyr_c" name="Pyruvate" compartment="c" boundaryCondition="false" hasOnlySubstanceUnits="false" constant="false"/>
+      <species id="atp_c" name="ATP" compartment="c" boundaryCondition="false" hasOnlySubstanceUnits="false" constant="false"/>
+      <species id="biomass_c" name="Biomass precursor" compartment="c" boundaryCondition="false" hasOnlySubstanceUnits="false" constant="false"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="lb_glucose" value="-10" constant="true"/>
+      <parameter id="ub_zero" value="0" constant="true"/>
+      <parameter id="ub_default" value="1000" constant="true"/>
+      <parameter id="lb_zero" value="0" constant="true"/>
+    </listOfParameters>
+    <fbc:listOfGeneProducts>
+      <fbc:geneProduct fbc:id="g_glk" fbc:label="glk" fbc:name="glucokinase"/>
+      <fbc:geneProduct fbc:id="g_pgi" fbc:label="pgi" fbc:name="glucose-6-phosphate isomerase"/>
+      <fbc:geneProduct fbc:id="g_gapA" fbc:label="gapA" fbc:name="glyceraldehyde-3-phosphate dehydrogenase"/>
+      <fbc:geneProduct fbc:id="g_pykF" fbc:label="pykF" fbc:name="pyruvate kinase"/>
+      <fbc:geneProduct fbc:id="g_biomass" fbc:label="growth" fbc:name="biomass synthesis"/>
+    </fbc:listOfGeneProducts>
+    <listOfReactions>
+      <reaction id="EX_glc__D_e" name="D-glucose exchange" reversible="true" fast="false" fbc:lowerFluxBound="lb_glucose" fbc:upperFluxBound="ub_zero">
+        <listOfReactants><speciesReference species="glc__D_e" stoichiometry="1" constant="true"/></listOfReactants>
+      </reaction>
+      <reaction id="GLCtex" name="D-glucose transport" reversible="false" fast="false" fbc:lowerFluxBound="lb_zero" fbc:upperFluxBound="ub_default">
+        <listOfReactants><speciesReference species="glc__D_e" stoichiometry="1" constant="true"/></listOfReactants>
+        <listOfProducts><speciesReference species="glc__D_c" stoichiometry="1" constant="true"/></listOfProducts>
+        <fbc:geneProductAssociation><fbc:geneProductRef fbc:geneProduct="g_glk"/></fbc:geneProductAssociation>
+      </reaction>
+      <reaction id="GLYCOLYSIS" name="Glycolysis" reversible="false" fast="false" fbc:lowerFluxBound="lb_zero" fbc:upperFluxBound="ub_default">
+        <listOfReactants><speciesReference species="glc__D_c" stoichiometry="1" constant="true"/></listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pyr_c" stoichiometry="2" constant="true"/>
+          <speciesReference species="atp_c" stoichiometry="2" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation><fbc:geneProductRef fbc:geneProduct="g_gapA"/></fbc:geneProductAssociation>
+      </reaction>
+      <reaction id="BIOMASS" name="Biomass synthesis" reversible="false" fast="false" fbc:lowerFluxBound="lb_zero" fbc:upperFluxBound="ub_default">
+        <listOfReactants>
+          <speciesReference species="pyr_c" stoichiometry="1" constant="true"/>
+          <speciesReference species="atp_c" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts><speciesReference species="biomass_c" stoichiometry="1" constant="true"/></listOfProducts>
+        <fbc:geneProductAssociation><fbc:geneProductRef fbc:geneProduct="g_biomass"/></fbc:geneProductAssociation>
+      </reaction>
+      <reaction id="EX_biomass" name="Biomass product sink" reversible="false" fast="false" fbc:lowerFluxBound="lb_zero" fbc:upperFluxBound="ub_default">
+        <listOfReactants><speciesReference species="biomass_c" stoichiometry="1" constant="true"/></listOfReactants>
+      </reaction>
+    </listOfReactions>
+    <fbc:listOfObjectives fbc:activeObjective="obj_growth">
+      <fbc:objective fbc:id="obj_growth" fbc:type="maximize">
+        <fbc:listOfFluxObjectives><fbc:fluxObjective fbc:reaction="BIOMASS" fbc:coefficient="1"/></fbc:listOfFluxObjectives>
+      </fbc:objective>
+    </fbc:listOfObjectives>
+  </model>
+</sbml>
